@@ -1,0 +1,37 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.7.6",
+    "heartbeatAt": "2021-02-03T16:37:32.116865",
+    "startedAt": "2021-02-03T16:37:30.659612",
+    "docker": null,
+    "cpu_count": 32,
+    "cuda": null,
+    "args": [
+        "--input-dir",
+        "input",
+        "--input-name",
+        "lvl_1-1.txt",
+        "--num_layer",
+        "3",
+        "--alpha",
+        "100",
+        "--niter",
+        "4000",
+        "--nfc",
+        "64",
+        "--out",
+        "trainedModel"
+    ],
+    "state": "running",
+    "codePath": "main.py",
+    "program": "main.py",
+    "git": {
+        "remote": "https://github.com/Mawiszus/TOAD-GAN.git",
+        "commit": "984c79667a5c757a491552bef8ab4bc8ef4b4242"
+    },
+    "email": "63438571+cappsb@users.noreply.github.com",
+    "root": "C:/GitHub/TOAD-GAN",
+    "host": "DESKTOP-S5EVM7A",
+    "username": "texho",
+    "executable": "C:\\Users\\texho\\anaconda3\\python.exe"
+}
