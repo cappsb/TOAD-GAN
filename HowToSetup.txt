@@ -1,0 +1,8 @@
+1) Create a folder for your new TOAD-GAN (or use pre-existing)
+2) In that folder, make sure there's a wandb folder as well (example: trainedModel\wandb\)
+3) to train an TOAD-GAN, use:
+python main.py --input-dir input --input-name lvl_1-1.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --out your_Folder_Name (default "output" folder)
+
+4) to generate samples from a TOAD-GAN
+
+python generate_samples.py  --out_ C:\GitHub\TOAD-GAN\output\wandb\run-20210203_103730-2kqsrshb\files --input-dir input --input-name lvl_1-1.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64
