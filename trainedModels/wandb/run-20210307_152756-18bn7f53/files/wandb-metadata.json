@@ -1,0 +1,39 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.7.6",
+    "heartbeatAt": "2021-03-07T21:27:58.606908",
+    "startedAt": "2021-03-07T21:27:56.819507",
+    "docker": null,
+    "gpu": "GeForce GTX 1660 Ti",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [
+        "--input-dir",
+        "input",
+        "--input-name",
+        "lvl_1-1.txt",
+        "--num_layer",
+        "3",
+        "--alpha",
+        "100",
+        "--niter",
+        "4000",
+        "--nfc",
+        "64",
+        "--out",
+        "trainedModels"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/cappsb/TOAD-GAN.git",
+        "commit": "9ece8b63b1dff38b19abcee95dfc0577c5118e45"
+    },
+    "email": "kdsteckel1@gmail.com",
+    "root": "C:/Users/kdste/Documents/GitHub/TOAD-GAN",
+    "host": "DESKTOP-444T2QN",
+    "username": "kdste",
+    "executable": "C:\\Users\\kdste\\anaconda3\\python.exe"
+}
