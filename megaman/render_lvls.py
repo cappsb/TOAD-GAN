@@ -24,10 +24,6 @@ if __name__ == '__main__':
     if 'README.txt' in dir_names:  # Ignore readme for default input folder
         dir_names.remove('README.txt')
 
-    # for curr_gen in dir_names:
-    #     directory_gen = directory + curr_gen
-    #     names = os.listdir(directory_gen)
-    #     names.sort()
     directory_gen = directory
     names = dir_names
     names.sort()
