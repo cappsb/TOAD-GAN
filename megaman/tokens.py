@@ -23,9 +23,6 @@ PASSABLE_TOKENS = OrderedDict(
     }
 )
 
-
-
-
 ENEMY_TOKENS = OrderedDict(
     {    
         "e": "enemy",
