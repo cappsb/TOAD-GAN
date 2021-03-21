@@ -52,8 +52,8 @@ TOKENS = OrderedDict(
 TOKEN_GROUPS = [SOLID_TOKENS, PASSABLE_TOKENS, NULL_TOKENS, ENEMY_TOKENS, SPECIAL_TOKENS]
 
 REPLACE_TOKENS = {  
-                    # "P": "-",
-                    # "Z": "-"
+                    "P": "-",
+                    "Z": "-"
                     }
 
 
