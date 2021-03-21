@@ -5,9 +5,9 @@ from torch.nn import Softmax
 from megaman.tokens import TOKEN_DOWNSAMPLING_HIERARCHY as HIERARCHY
 
 
-def special_mario_downsampling(num_scales, scales, image, token_list):
+def special_megaman_downsampling(num_scales, scales, image, token_list):
     """
-    Special Downsampling Method designed for Super Mario Bros. Token based levels.
+    Special Downsampling Method designed for Mega Man. Token based levels.
 
     num_scales : number of scales the image is scaled down to.
     scales : downsampling scales. Should be an array tuples (scale_x, scale_y) of length num_scales.

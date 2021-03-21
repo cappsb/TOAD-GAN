@@ -13,7 +13,7 @@ def load_level_from_text(path_to_level_txt, replace_tokens=REPLACE_TOKENS):
                 line = line.replace(token, replacement)
             ascii_level.append(line)
     return ascii_level
-SPRITE_PATH = os.getcwd()+"\\resized"
+SPRITE_PATH = os.getcwd() + '\\sprites'
 
 if __name__ == '__main__':
     ImgGen = LevelImageGen(SPRITE_PATH)

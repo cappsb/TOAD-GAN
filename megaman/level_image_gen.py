@@ -11,11 +11,11 @@ class LevelImageGen:
         map_names = ['-', '#', '|', 
                     'H', 'B', 'M', 'C',
                     'Z', 'P', '@', 
-                    '~', 'e', 'e', 'e'
+                    '~', 'e'
                     ]
         sprite_dict = dict()
         for i in range(12):
-            imageName = sprite_path +'\\Tile-'+str(i)+'.PNG'
+            imageName = sprite_path +'\Tile-'+str(i)+'.PNG'
             image = Image.open(imageName)
             sprite_dict[map_names[i]] = image
 
@@ -30,7 +30,6 @@ class LevelImageGen:
         new_top = curr_y * 8
         new_right = (curr_x + 1) * 8
         new_bottom = (curr_y + 1) * 8
-        
         actual_sprite = self.sprite_dict[sprite_key]
 
         return actual_sprite, (new_left, new_top, new_right, new_bottom)

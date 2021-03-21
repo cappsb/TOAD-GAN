@@ -51,8 +51,10 @@ TOKENS = OrderedDict(
 
 TOKEN_GROUPS = [NULL_TOKENS, SOLID_TOKENS, PASSABLE_TOKENS, ENEMY_TOKENS, SPECIAL_TOKENS]
 
-REPLACE_TOKENS = {  "P": "player",
-                    "Z": "level orb"}
+REPLACE_TOKENS = {  
+                    # "P": "-",
+                    # "Z": "-"
+                    }
 
 
 
