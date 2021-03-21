@@ -20,6 +20,13 @@ from mariokart.tokens import REPLACE_TOKENS as MARIOKART_REPLACE_TOKENS
 from mario.tokens import TOKEN_GROUPS as MARIO_TOKEN_GROUPS
 from mariokart.tokens import TOKEN_GROUPS as MARIOKART_TOKEN_GROUPS
 from mario.special_mario_downsampling import special_mario_downsampling
+
+
+from megaman.level_image_gen import LevelImageGen as MegaManLevelGen
+from megaman.tokens import REPLACE_TOKENS as MEGAMAN_REPLACE_TOKENS
+from megaman.tokens import TOKEN_GROUPS as MEGAMAN_TOKEN_GROUPS
+from megaman.special_megaman_downsampling import special_megaman_downsampling
+
 from generate_noise import generate_spatial_noise
 from models import load_trained_pyramid
 
@@ -46,9 +53,11 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         token_groups = MARIO_TOKEN_GROUPS
     elif opt.game == 'mariokart':
         token_groups = MARIOKART_TOKEN_GROUPS
+    elif opt.game == 'megaman':
+        token_groups = MEGAMAN_TOKEN_GROUPS
     else:
         token_groups = []
-        NameError("name of --game not recognized. Supported: mario, mariokart")
+        NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
     # Main sampling loop
     for G, Z_opt, noise_amp in zip(generators, noise_maps, noise_amplitudes):
@@ -379,9 +388,12 @@ if __name__ == '__main__':
             opt.ImgGen = MariokartLevelGen(sprite_path)
             replace_tokens = MARIOKART_REPLACE_TOKENS
             downsample = special_mariokart_downsampling
-
+        elif opt.game == 'megaman':
+            opt.ImgGen = MegaManLevelGen(sprite_path)
+            replace_tokens = MEGAMAN_REPLACE_TOKENS
+            downsample = special_megaman_downsampling
         else:
-            NameError("name of --game not recognized. Supported: mario, mariokart")
+            NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
         # Load level
         real = read_level(opt, None, replace_tokens).to(opt.device)
