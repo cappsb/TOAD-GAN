@@ -24,7 +24,8 @@ SPECIAL_TOKENS = OrderedDict(
 
 PLAYER_TOKENS = OrderedDict(
     {
-        "E":"enemy"
+        "E":"enemy",
+        "M":"spawn"
     }
 )
 
@@ -41,4 +42,4 @@ TOKENS = OrderedDict(
 
 TOKEN_GROUPS = [EMPTY_TOKEN, GROUND_TOKENS, SPECIAL_TOKENS, PLAYER_TOKENS]
 
-REPLACE_TOKENS = {"M":"spawn"}
+REPLACE_TOKENS = {}
