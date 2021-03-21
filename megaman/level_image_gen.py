@@ -30,12 +30,16 @@ class LevelImageGen:
         #     for j in range(sheet_length[1]):
         #         sprite_dict[map_names[sprite_counter]] = mapsheet.crop((j*8, i*8, (j+1)*8, (i+1)*8))
         #         sprite_counter += 1
+        map_names = ['-', '#', '|', 
+                    'H', 'B', 'M', 'C',
+                    'Z', 'P', '@', 
+                    '~', 'e', 'e', 'e'
+                    ]
         sprite_dict = dict()
-        for i in range(10):
-            imageName = os.path.join(sprite_path, 'Tile-'+i+'.PNG')
-            with open(imageName, 'rb') as f:
-                image = f.read()
-            sprite_dict[i] = image
+        for i in range(12):
+            imageName = sprite_path +'\\Tile-'+str(i)+'.PNG'
+            image = Image.open(imageName)
+            sprite_dict[map_names[i]] = image
 
         self.sprite_dict = sprite_dict
 
@@ -78,6 +82,7 @@ class LevelImageGen:
         #     actual_sprite = self.sprite_dict[walls[w_col][w_row]]
 
         # else:
+        
         actual_sprite = self.sprite_dict[sprite_key]
 
         return actual_sprite, (new_left, new_top, new_right, new_bottom)
@@ -98,6 +103,7 @@ class LevelImageGen:
             for x in range(len_level):
                 curr_sprite = ascii_level[y][x]
                 sprite, box = self.prepare_sprite_and_box(ascii_level, curr_sprite, x, y)
+                sprite = sprite.convert("RGBA")
                 dst.paste(sprite, box, mask=sprite)
 
         return dst

@@ -1,11 +1,19 @@
 import os
 
-from mario.level_utils import load_level_from_text
-from megaman.level_image_gen import LevelImageGen
-
+#from mario.level_utils import load_level_from_text
+from level_image_gen import LevelImageGen
+from tokens import REPLACE_TOKENS
 # Renders all level.txt files to png images inside a given folder. Expects ONLY .txt in that folder.
-
-SPRITE_PATH = "./resized"
+def load_level_from_text(path_to_level_txt, replace_tokens=REPLACE_TOKENS):
+    """ Loads an ascii level from a text file. """
+    with open(path_to_level_txt, "r") as f:
+        ascii_level = []
+        for line in f:
+            for token, replacement in replace_tokens.items():
+                line = line.replace(token, replacement)
+            ascii_level.append(line)
+    return ascii_level
+SPRITE_PATH = "C:\\GitHub\\TOAD-GAN\\megaman\\resized"
 
 if __name__ == '__main__':
     ImgGen = LevelImageGen(SPRITE_PATH)

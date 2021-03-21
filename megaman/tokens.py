@@ -31,8 +31,7 @@ ENEMY_TOKENS = OrderedDict(
 SPECIAL_TOKENS = OrderedDict(
     {
         "H": "hazard",
-        "P": "player",
-        "Z": "level orb",
+        
      }
 )
 
@@ -52,7 +51,8 @@ TOKENS = OrderedDict(
 
 TOKEN_GROUPS = [NULL_TOKENS, SOLID_TOKENS, PASSABLE_TOKENS, ENEMY_TOKENS, SPECIAL_TOKENS]
 
-REPLACE_TOKENS = {}
+REPLACE_TOKENS = {  "P": "player",
+                    "Z": "level orb"}
 
 
 
