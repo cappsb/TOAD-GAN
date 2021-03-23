@@ -6,3 +6,4 @@ python main.py --input-dir input --input-name lvl_1-1.txt --num_layer 3 --alpha 
 4) to generate samples from a TOAD-GAN
 
 python generate_samples.py  --out_ C:\GitHub\TOAD-GAN\output\wandb\run-20210203_103730-2kqsrshb\files --input-dir input --input-name lvl_1-1.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64
+

@@ -5,7 +5,7 @@ from torch.nn import Softmax
 from loderunner.tokens import TOKEN_DOWNSAMPLING_HIERARCHY as HIERARCHY
 
 
-def special_mario_downsampling(num_scales, scales, image, token_list):
+def special_loderunner_downsampling(num_scales, scales, image, token_list):
     """
     Special Downsampling Method designed for Super Mario Bros. Token based levels.
     num_scales : number of scales the image is scaled down to.

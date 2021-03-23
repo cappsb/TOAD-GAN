@@ -1,0 +1,5 @@
+Training 
+python main.py --input-dir input/loderunner/ --input-name "Level 1.txt" --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game loderunner
+
+Generating Samples
+python generate_samples.py  --out_ C:\Users\kdste\Documents\GitHub\TOAD-GAN\output\wandb\run-20210323_150755-2bfvjqa2\files --input-dir input/loderunner/ --input-name "Level 1.txt" --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game loderunner

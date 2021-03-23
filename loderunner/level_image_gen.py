@@ -7,7 +7,7 @@ class LevelImageGen:
         map_names = ['.', 
                     'B', 'b', 
                     '#', 'G', '-', 
-                    'E', 'M'
+                    'E','M'
                     ]
         sprite_dict = dict()
         for i in range(8):

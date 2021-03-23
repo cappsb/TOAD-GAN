@@ -13,6 +13,8 @@ from mariokart.special_mariokart_downsampling import special_mariokart_downsampl
 from models import init_models, reset_grads, restore_weights
 from models.generator import Level_GeneratorConcatSkip2CleanAdd
 from train_single_scale import train_single_scale
+from loderunner.tokens import TOKEN_GROUPS as LODERUNNER_TOKEN_GROUPS
+from loderunner.special_loderunner_downsampling import special_loderunner_downsampling
 
 
 def train(real, opt):
@@ -23,6 +25,8 @@ def train(real, opt):
 
     if opt.game == 'mario':
         token_group = MARIO_TOKEN_GROUPS
+    elif opt.game == 'loderunner':
+        token_group = LODERUNNER_TOKEN_GROUPS
     else:  # if opt.game == 'mariokart':
         token_group = MARIOKART_TOKEN_GROUPS
 
@@ -31,6 +35,8 @@ def train(real, opt):
 
     if opt.game == 'mario':
         scaled_list = special_mario_downsampling(opt.num_scales, scales, real, opt.token_list)
+    elif opt.game == 'loderunner':
+        scaled_list = special_loderunner_downsampling(opt.num_scales, scales, real, opt.token_list)
     else:  # if opt.game == 'mariokart':
         scaled_list = special_mariokart_downsampling(opt.num_scales, scales, real, opt.token_list)
 
