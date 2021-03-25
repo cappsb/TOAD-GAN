@@ -140,3 +140,25 @@ def load_trained_pyramid(opt):
     else:
         print('no appropriate trained model exists, please train first')
     return Gs,Zs,reals,NoiseAmp
+
+def load_multiple_trained_pyramid(opt):
+    dir = opt.out_
+    #[(Gs0,Zs0,reals0,NoiseAmp0),(Gs1,Zs1,reals1,NoiseAmp1),...]
+    list_of_gans = []
+    num_gans = opt.num_gans_
+    if(os.path.exists(dir)):
+        for i in range(num_gans):
+            temp = []
+            reals = torch.load('%s/GAN{}/reals.pth' % dir, i)
+            Gs = torch.load('%s/GAN{}/generators.pth' % dir, i)
+            Zs = torch.load('%s/GAN{}/noise_maps.pth' % dir, i)
+            NoiseAmp = torch.load('%s/GAN{}/noise_amplitudes.pth' % dir, i)
+            temp.append(reals)
+            temp.append(Gs)
+            temp.append(Zs)
+            temp.append(NoiseAmp)
+            list_of_gans.append(temp)
+
+    else:
+        print('no appropriate trained model exists, please train first')
+    return list_of_gans

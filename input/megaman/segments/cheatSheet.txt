@@ -1,0 +1,7 @@
+horizontal = 0
+up = 1
+down = 2
+upper left = 3
+upper right = 4
+lower right = 5
+lower left = 6

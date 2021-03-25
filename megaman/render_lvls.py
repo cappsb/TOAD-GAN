@@ -13,12 +13,12 @@ def load_level_from_text(path_to_level_txt, replace_tokens=REPLACE_TOKENS):
                 line = line.replace(token, replacement)
             ascii_level.append(line)
     return ascii_level
-SPRITE_PATH = os.getcwd() + '\\sprites'
+SPRITE_PATH = os.getcwd() + '/sprites'
 
 if __name__ == '__main__':
     ImgGen = LevelImageGen(SPRITE_PATH)
 
-    directory = '../input/megaman/trimmed/'
+    directory = '../input/megaman/'
     dir_names = os.listdir(directory)
     dir_names.sort()
     if 'README.txt' in dir_names:  # Ignore readme for default input folder
