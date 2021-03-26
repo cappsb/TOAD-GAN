@@ -58,10 +58,10 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
     else:
         token_groups = []
         NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
-
+    
     # Main sampling loop
     for G, Z_opt, noise_amp in zip(generators, noise_maps, noise_amplitudes):
-
+        
         if current_scale >= len(generators):
             break  # if we do not start at current_scale=0 we need this
 
@@ -105,7 +105,7 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
             in_s = torch.zeros(reals[0].shape[0], channels, *reals[0].shape[2:]).to(opt.device)
         elif in_s.sum() == 0:
             in_s = torch.zeros(1, channels, *in_s.shape[-2:]).to(opt.device)
-
+        print(channels)
         # Generate num_samples samples in current scale
         for n in tqdm(range(0, num_samples, 1)):
 

@@ -136,7 +136,6 @@ def load_trained_pyramid(opt):
         Gs = torch.load('%s/generators.pth' % dir)
         Zs = torch.load('%s/noise_maps.pth' % dir)
         NoiseAmp = torch.load('%s/noise_amplitudes.pth' % dir)
-
     else:
         print('no appropriate trained model exists, please train first')
     return Gs,Zs,reals,NoiseAmp
@@ -146,16 +145,18 @@ def load_multiple_trained_pyramid(opt):
     #[(Gs0,Zs0,reals0,NoiseAmp0),(Gs1,Zs1,reals1,NoiseAmp1),...]
     list_of_gans = []
     num_gans = opt.num_gans_
+    print(dir)
     if(os.path.exists(dir)):
         for i in range(num_gans):
             temp = []
-            reals = torch.load('%s/GAN{}/reals.pth' % dir, i)
-            Gs = torch.load('%s/GAN{}/generators.pth' % dir, i)
-            Zs = torch.load('%s/GAN{}/noise_maps.pth' % dir, i)
-            NoiseAmp = torch.load('%s/GAN{}/noise_amplitudes.pth' % dir, i)
-            temp.append(reals)
+            
+            Gs = torch.load(dir+'/GAN'+str(i)+'/files/generators.pth')
+            Zs = torch.load(dir+'/GAN'+str(i)+'/files/noise_maps.pth')
+            reals = torch.load(dir+'/GAN'+str(i)+'/files/reals.pth')
+            NoiseAmp = torch.load(dir+'/GAN'+str(i)+'/files/noise_amplitudes.pth')
             temp.append(Gs)
             temp.append(Zs)
+            temp.append(reals)
             temp.append(NoiseAmp)
             list_of_gans.append(temp)
 

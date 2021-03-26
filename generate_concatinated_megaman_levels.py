@@ -32,7 +32,7 @@ from models import load_trained_pyramid
 from models import load_multiple_trained_pyramid
 
 
-def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=None, scale_v=1.0, scale_h=1.0,
+def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, ganNumber, in_s=None, scale_v=1.0, scale_h=1.0,
                      current_scale=0, gen_start_scale=0, num_samples=50, render_images=True, save_tensors=False,
                      save_dir="random_samples"):
     """
@@ -48,7 +48,7 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
 
     # Holds images generated in current scale
     images_cur = []
-
+    #print(opt.input_name)
     # Check which game we are using for token groups
     if opt.game == 'mario':
         token_groups = MARIO_TOKEN_GROUPS
@@ -61,8 +61,9 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
     # Main sampling loop
+    
     for G, Z_opt, noise_amp in zip(generators, noise_maps, noise_amplitudes):
-
+        
         if current_scale >= len(generators):
             break  # if we do not start at current_scale=0 we need this
 
@@ -106,7 +107,7 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
             in_s = torch.zeros(reals[0].shape[0], channels, *reals[0].shape[2:]).to(opt.device)
         elif in_s.sum() == 0:
             in_s = torch.zeros(1, channels, *in_s.shape[-2:]).to(opt.device)
-
+        print(channels)
         # Generate num_samples samples in current scale
         for n in tqdm(range(0, num_samples, 1)):
 
@@ -164,7 +165,7 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
             # if current_scale == 0 or current_scale == len(reals) - 1:
             # Save only last scale
             if current_scale == len(reals) - 1:
-                dir2save = opt.out_ + '/' + save_dir
+                dir2save = opt.out_ + '/' + save_dir + '/GAN'+str(ganNumber)+'/'
 
                 # Make directories
                 try:
@@ -302,7 +303,7 @@ if __name__ == '__main__':
     # Parse arguments
     parse = get_arguments()
     parse.add_argument("--out_", help="folder containing generator files")
-    parse.add_argument("--num_gans_", help="Number of generator files", default = 1)
+    parse.add_argument("--num_gans_", help="Number of generator files", default = 7)
     parse.add_argument("--scale_v", type=float, help="vertical scale factor", default=1.0)
     parse.add_argument("--scale_h", type=float, help="horizontal scale factor", default=1.0)
     parse.add_argument("--gen_start_scale", type=int, help="scale to start generating in", default=0)
@@ -342,28 +343,34 @@ if __name__ == '__main__':
     else:
         NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
-    # Load level
-    real = read_level(opt, None, replace_tokens).to(opt.device)
-    # Load Generator
-    ## HERE IS WHERE TO LOOP THROUGH GENERATORS
-    #generators, noise_maps, reals, noise_amplitudes = load_trained_pyramid(opt)
     multiple_gans = load_multiple_trained_pyramid(opt)
-    # For Token insertion (Experimental!) --------------------------------------------------------------------------
     
-    # Get input shape for in_s
-    real_down = downsample(1, [[opt.scale_v, opt.scale_h]], real, opt.token_list)
-    real_down = real_down[0]
-    in_s = torch.zeros_like(real_down, device=opt.device)
     prefix = "arbitrary"
 
     # Directory name
     s_dir_name = "%s_random_samples_v%.5f_h%.5f_st%d" % (prefix, opt.scale_v, opt.scale_h, opt.gen_start_scale)
     for i in range(len(multiple_gans)):
+        # Load level
+        opt.input_name = "GAN"+str(i)+".txt"
+        real = read_level(opt, None, replace_tokens).to(opt.device)
+        # Load Generator
+        ## HERE IS WHERE TO LOOP THROUGH GENERATORS
+        #generators, noise_maps, reals, noise_amplitudes = load_trained_pyramid(opt)
+        
+        # For Token insertion (Experimental!) --------------------------------------------------------------------------
+    
+        # Get input shape for in_s
+        real_down = downsample(1, [[opt.scale_v, opt.scale_h]], real, opt.token_list)
+        real_down = real_down[0]
+        in_s = torch.zeros_like(real_down, device=opt.device)
+        
+        
+        # print("WORKING FOR GAN ",i)
         generators = multiple_gans[i][0]
         noise_maps = multiple_gans[i][1]
         reals = multiple_gans[i][2]
         noise_amplitudes = multiple_gans[i][3]
-        generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=in_s,
+        generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, i, in_s=in_s,
                         scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples)
 
 
