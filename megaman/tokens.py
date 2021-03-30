@@ -16,7 +16,7 @@ SOLID_TOKENS = OrderedDict(
 PASSABLE_TOKENS = OrderedDict(
     {
         "-": "air",
-        "|": "ladder",
+        
         "B": "breakable",
         "M": "moving platform",
         "~": "water",
@@ -31,6 +31,7 @@ ENEMY_TOKENS = OrderedDict(
 SPECIAL_TOKENS = OrderedDict(
     {
         "H": "hazard",
+        "|": "ladder",
         
      }
 )
@@ -46,10 +47,10 @@ TOKEN_DOWNSAMPLING_HIERARCHY = [
 ]
 
 TOKENS = OrderedDict(
-    { **SOLID_TOKENS, **PASSABLE_TOKENS, **NULL_TOKENS, **ENEMY_TOKENS, **SPECIAL_TOKENS}
+    {  **SPECIAL_TOKENS, **SOLID_TOKENS, **PASSABLE_TOKENS, **NULL_TOKENS, **ENEMY_TOKENS}
 )
 
-TOKEN_GROUPS = [SOLID_TOKENS, PASSABLE_TOKENS, NULL_TOKENS, ENEMY_TOKENS, SPECIAL_TOKENS]
+TOKEN_GROUPS = [SPECIAL_TOKENS, SOLID_TOKENS, PASSABLE_TOKENS, NULL_TOKENS, ENEMY_TOKENS ]
 
 REPLACE_TOKENS = {  
                     "P": "-",

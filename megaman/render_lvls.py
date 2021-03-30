@@ -18,7 +18,7 @@ SPRITE_PATH = os.getcwd() + '/sprites'
 if __name__ == '__main__':
     ImgGen = LevelImageGen(SPRITE_PATH)
 
-    directory = '../input/megaman/'
+    directory = '../input/megaman/experimental'
     dir_names = os.listdir(directory)
     dir_names.sort()
     if 'README.txt' in dir_names:  # Ignore readme for default input folder
