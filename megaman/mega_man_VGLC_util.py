@@ -32,7 +32,6 @@ def convertFileToListOfLists(directory):
     return list_of_lists
     
 def getSegment(level, x, y): #takes in the level as list of list and x-y points of the upper left corner and returns the segment at that area
-
     result = []
     for newY in range(y, y+14):
         line = []
@@ -68,7 +67,6 @@ def convertNullToSegment(level, segment, x, y):
     for newY in range(y, y+14):
         oX = 0
         for newX in range(x, x+16):
-            # print(oY, oX)
             level[newY][newX] = segment[oY][oX]
             oX+=1
         oY+=1
@@ -113,7 +111,7 @@ if __name__ == '__main__':
     target_dir = '../input/megaman/experimental/'  # + curr_gen
     os.makedirs(target_dir, exist_ok=True)
 
-    for i in range(min(1, len(names))):
+    for i in range(min(10, len(names))):
         level = convertFileToListOfLists(os.path.join(directory_gen, names[i]))
         # printLevel(level)
         segments = getSegments(level)
@@ -123,14 +121,8 @@ if __name__ == '__main__':
         if level[-1][-1] == '\n':
             level[-1] = level[-1][0:-1]
         levelString = converToListOfString(level)
-        with open(target_dir+'test.txt', 'w') as f:
+        with open(target_dir+'test'+str(i+1)+'.txt', 'w') as f:
             for item in levelString:
                 f.write("%s\n" % item)
         print('completed')
-        # print(level[0])
-        #lvl = convertFileToListOfLists(os.path.join(directory_gen, names[i]), {})
-        #if lvl[-1][-1] == '\n':
-        #    lvl[-1] = lvl[-1][0:-1]
-        # lvl_img = ImgGen.render(lvl)
-        #lvl_img.save(os.path.join(target_dir, names[i][0:-4] + '.txt'), format='txt')
     

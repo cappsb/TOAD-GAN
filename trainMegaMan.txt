@@ -1,1 +1,13 @@
 python main.py --input-dir input/megaman/trimmed/ --input-name megaman_1_1.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman
+
+
+python3 main.py --input-dir input/megaman/experimental/ --input-name test1.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman; 
+python3 main.py --input-dir input/megaman/experimental/ --input-name test2.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test3.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test4.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman; 
+python3 main.py --input-dir input/megaman/experimental/ --input-name test5.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test6.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test7.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman; 
+python3 main.py --input-dir input/megaman/experimental/ --input-name test8.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test9.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+python3 main.py --input-dir input/megaman/experimental/ --input-name test10.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
