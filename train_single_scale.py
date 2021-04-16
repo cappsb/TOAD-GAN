@@ -17,6 +17,7 @@ from mario.tokens import TOKEN_GROUPS as MARIO_TOKEN_GROUPS
 from mariokart.tokens import TOKEN_GROUPS as MARIOKART_TOKEN_GROUPS
 from megaman.tokens import TOKEN_GROUPS as MEGAMAN_TOKEN_GROUPS
 from models import calc_gradient_penalty, save_networks
+from loderunner.tokens import TOKEN_GROUPS as LODERUNNER_TOKEN_GROUPS
 
 
 def update_noise_amplitude(z_prev, real, opt):
@@ -35,7 +36,13 @@ def train_single_scale(D, G, reals, generators, noise_maps, input_from_prev_scal
 
     if opt.game == 'mario':
         token_group = MARIO_TOKEN_GROUPS
+
+    if opt.game == 'loderunner':
+        token_group = LODERUNNER_TOKEN_GROUPS
+    #else:  # if opt.game == 'mariokart':
+
     if opt.game == 'mariokart':
+
         token_group = MARIOKART_TOKEN_GROUPS
     if opt.game == 'megaman':
         token_group = MEGAMAN_TOKEN_GROUPS

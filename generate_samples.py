@@ -29,6 +29,9 @@ from megaman.special_megaman_downsampling import special_megaman_downsampling
 
 from generate_noise import generate_spatial_noise
 from models import load_trained_pyramid
+from loderunner.special_loderunner_downsampling import special_loderunner_downsampling
+from loderunner.level_image_gen import LevelImageGen as LoderunnerLevelGen
+from loderunner.tokens import REPLACE_TOKENS as LODERUNNER_REPLACE_TOKENS
 
 
 def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=None, scale_v=1.0, scale_h=1.0,
@@ -388,10 +391,19 @@ if __name__ == '__main__':
             opt.ImgGen = MariokartLevelGen(sprite_path)
             replace_tokens = MARIOKART_REPLACE_TOKENS
             downsample = special_mariokart_downsampling
+
+
+        elif opt.game == 'loderunner':
+            opt.ImgGen = LoderunnerLevelGen(sprite_path)
+            replace_tokens = LODERUNNER_REPLACE_TOKENS
+            downsample = special_loderunner_downsampling
+
+
         elif opt.game == 'megaman':
             opt.ImgGen = MegaManLevelGen(sprite_path)
             replace_tokens = MEGAMAN_REPLACE_TOKENS
             downsample = special_megaman_downsampling
+
         else:
             NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 

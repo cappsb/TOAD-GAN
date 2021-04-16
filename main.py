@@ -16,7 +16,9 @@ from loguru import logger
 import wandb
 import sys
 import torch
-
+from loderunner.tokens import REPLACE_TOKENS as LODERUNNER_REPLACE_TOKENS
+from loderunner.level_image_gen import LevelImageGen as LoderunnerLevelGen
+from loderunner.special_loderunner_downsampling import special_loderunner_downsampling
 
 def get_tags(opt):
     """ Get Tags for logging from input name. Helpful for wandb. """
@@ -56,10 +58,17 @@ def main():
         opt.ImgGen = MariokartLevelGen(sprite_path)
         replace_tokens = MARIOKART_REPLACE_TOKENS
         downsample = special_mariokart_downsampling
+
+    elif opt.game == 'loderunner':
+        opt.ImgGen = LoderunnerLevelGen(sprite_path)
+        replace_tokens = LODERUNNER_REPLACE_TOKENS
+        downsample = special_loderunner_downsampling
+
     elif opt.game == 'megaman':
         opt.ImgGen = MegaManLevelGen(sprite_path)
         replace_tokens = MEGAMAN_REPLACE_TOKENS
         downsample = special_megaman_downsampling
+
     else:
         NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
