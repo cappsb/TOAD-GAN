@@ -1,6 +1,9 @@
 # Code inspired by https://github.com/tamarott/SinGAN
 from generate_samples import generate_samples
 from train import train
+from megaman.tokens import REPLACE_TOKENS as MEGAMAN_REPLACE_TOKENS
+from megaman.level_image_gen import LevelImageGen as MegaManLevelGen
+from megaman.special_megaman_downsampling import special_megaman_downsampling
 from mariokart.tokens import REPLACE_TOKENS as MARIOKART_REPLACE_TOKENS
 from mario.tokens import REPLACE_TOKENS as MARIO_REPLACE_TOKENS
 from mariokart.level_image_gen import LevelImageGen as MariokartLevelGen
@@ -55,12 +58,19 @@ def main():
         opt.ImgGen = MariokartLevelGen(sprite_path)
         replace_tokens = MARIOKART_REPLACE_TOKENS
         downsample = special_mariokart_downsampling
+
     elif opt.game == 'loderunner':
         opt.ImgGen = LoderunnerLevelGen(sprite_path)
         replace_tokens = LODERUNNER_REPLACE_TOKENS
         downsample = special_loderunner_downsampling
+
+    elif opt.game == 'megaman':
+        opt.ImgGen = MegaManLevelGen(sprite_path)
+        replace_tokens = MEGAMAN_REPLACE_TOKENS
+        downsample = special_megaman_downsampling
+
     else:
-        NameError("name of --game not recognized. Supported: mario, mariokart")
+        NameError("name of --game not recognized. Supported: mario, mariokart, megaman")
 
     # Read level according to input arguments
     real = read_level(opt, None, replace_tokens).to(opt.device)
