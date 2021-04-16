@@ -32,6 +32,7 @@ from models import load_trained_pyramid
 from loderunner.special_loderunner_downsampling import special_loderunner_downsampling
 from loderunner.level_image_gen import LevelImageGen as LoderunnerLevelGen
 from loderunner.tokens import REPLACE_TOKENS as LODERUNNER_REPLACE_TOKENS
+from loderunner.tokens import TOKEN_GROUPS as LODERUNNER_TOKEN_GROUPS
 
 
 def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=None, scale_v=1.0, scale_h=1.0,
@@ -58,6 +59,8 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         token_groups = MARIOKART_TOKEN_GROUPS
     elif opt.game == 'megaman':
         token_groups = MEGAMAN_TOKEN_GROUPS
+    elif opt.game == 'loderunner':
+        token_groups = LODERUNNER_TOKEN_GROUPS
     else:
         token_groups = []
         NameError("name of --game not recognized. Supported: mario, mariokart, megaman")

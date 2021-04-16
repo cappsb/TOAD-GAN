@@ -28,7 +28,7 @@ def train(real, opt):
     if opt.game == 'mario':
         token_group = MARIO_TOKEN_GROUPS
 
-    elif opt.game == 'loderunner':
+    if opt.game == 'loderunner':
         token_group = LODERUNNER_TOKEN_GROUPS
     #else:  # if opt.game == 'mariokart':
 
