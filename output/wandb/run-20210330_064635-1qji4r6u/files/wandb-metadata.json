@@ -1,0 +1,39 @@
+{
+    "os": "Linux-5.8.0-48-generic-x86_64-with-glibc2.29",
+    "python": "3.8.5",
+    "heartbeatAt": "2021-03-30T11:46:36.035461",
+    "startedAt": "2021-03-30T11:46:35.523777",
+    "docker": null,
+    "gpu": "GeForce RTX 2080 SUPER",
+    "gpu_count": 1,
+    "cpu_count": 32,
+    "cuda": null,
+    "args": [
+        "--input-dir",
+        "input/megaman/experimental/",
+        "--input-name",
+        "test5.txt",
+        "--num_layer",
+        "3",
+        "--alpha",
+        "100",
+        "--niter",
+        "4000",
+        "--nfc",
+        "64",
+        "--game",
+        "megaman"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/cappsb/TOAD-GAN.git",
+        "commit": "f30dd56389e7194a176be16add0840e5b7cb22f5"
+    },
+    "email": "63438571+cappsb@users.noreply.github.com",
+    "root": "/home/cappsb/Documents/GitHub/TOAD-GAN",
+    "host": "cappsb-System-Product-Name",
+    "username": "cappsb",
+    "executable": "/usr/bin/python3"
+}
