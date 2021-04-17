@@ -15,7 +15,7 @@ class LevelImageGen:
                     ]
         sprite_dict = dict()
         for i in range(12):
-            imageName = sprite_path +'\Tile-'+str(i)+'.PNG'
+            imageName = sprite_path +'/Tile-'+str(i)+'.PNG'
             image = Image.open(imageName)
             sprite_dict[map_names[i]] = image
 
