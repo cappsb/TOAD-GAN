@@ -1,0 +1,25 @@
+graph {
+UWYD[label="s"]
+LKWM[label="sl"]
+OANH[label="e"]
+NWFV[label="b"]
+BWVS[label="e"]
+BRFD[label="e"]
+BSNA[label="k"]
+INER[label="e"]
+FAXN[label="l"]
+EBYC[label="e"]
+OHVW[label="t"]
+UWYD -- LKWM
+UWYD -- OANH
+UWYD -- NWFV
+UWYD -- BWVS
+LKWM -- BRFD
+LKWM -- OANH
+OANH -- BSNA
+OANH -- NWFV
+BSNA -- INER
+BSNA -- FAXN
+FAXN -- EBYC
+EBYC -- OHVW
+}
