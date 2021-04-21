@@ -11,3 +11,7 @@ python3 main.py --input-dir input/megaman/experimental/ --input-name test7.txt -
 python3 main.py --input-dir input/megaman/experimental/ --input-name test8.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
 python3 main.py --input-dir input/megaman/experimental/ --input-name test9.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
 python3 main.py --input-dir input/megaman/experimental/ --input-name test10.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman;
+
+
+TO RUN:
+python3 generate_samples.py  --out_ output/wandb/test4Maybe/files/ --input-dir input/megaman/experimental/ --input-name test4.txt --num_layer 3 --alpha 100 --niter 4000 --nfc 64 --game megaman

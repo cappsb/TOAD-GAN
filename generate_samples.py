@@ -116,7 +116,7 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         for n in tqdm(range(0, num_samples, 1)):
 
             # Get noise image
-            z_curr = generate_spatial_noise([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
+            z_curr = generate_spatial_noise([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device) #replace with z_curr = latent_vector
             z_curr = m(z_curr)
 
             # Set up previous image I_prev
