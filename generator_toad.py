@@ -120,9 +120,8 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         # z_curr = generate_spatial_noise([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device) #replace with z_curr = latent_vector
         z_curr = torch.randn([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
         # z_curr = torch.zeros([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
-        # print(len(z_curr), len(z_curr[0]), len(z_curr[0][0]), len(z_curr[0][0][0]))
-        # print(z_curr[0][0][0])
-        # quit()
+        # z_curr = torch.ones([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
+        # USE torch.tensor([LIST]) for defining a tensor outright
         z_curr = m(z_curr)
 
         # Set up previous image I_prev
