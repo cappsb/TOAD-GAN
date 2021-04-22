@@ -342,9 +342,9 @@ if __name__ == '__main__':
         #get the trained TOAD-GAN, now can mess with stuff
         slider = tk.Scale(root, from_=-1.0, to=1.0, resolution=0.05, orient=tk.HORIZONTAL, label="LV")
         slider.place(x=0, y=50)
-        yvalue = tk.Scale(root, from_=1, to=25, orient=tk.HORIZONTAL, label="y-distance")
+        yvalue = tk.Scale(root, from_=1, to=reals[0].shape[2:][0]+5, orient=tk.HORIZONTAL, label="y-distance")
         yvalue.place(x=0, y=150)
-        xvalue = tk.Scale(root, from_=1, to=80, orient=tk.HORIZONTAL, label="x-distance")
+        xvalue = tk.Scale(root, from_=1, to=reals[0].shape[2:][1]+5, orient=tk.HORIZONTAL, label="x-distance")
         xvalue.place(x=0, y=225)
         btn = tk.Button(root, text="generate (from zeros)!", command=slide_change)
         btn.place(x=0, y=300)
