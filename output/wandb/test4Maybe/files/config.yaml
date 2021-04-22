@@ -1,0 +1,138 @@
+wandb_version: 1
+
+Dsteps:
+  desc: null
+  value: 3
+Gsteps:
+  desc: null
+  value: 3
+ImgGen:
+  desc: null
+  value: []
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.10.23
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.8.5
+    t:
+      1:
+      - 1
+      2:
+      - 1
+      3:
+      - 3
+      4: 3.8.5
+      5: 0.10.23
+      8:
+      - 5
+alpha:
+  desc: null
+  value: 100.0
+beta1:
+  desc: null
+  value: 0.5
+device:
+  desc: null
+  value: cuda:0
+game:
+  desc: null
+  value: megaman
+gamma:
+  desc: null
+  value: 0.1
+input_dir:
+  desc: null
+  value: input/megaman/experimental/
+input_name:
+  desc: null
+  value: test5.txt
+ker_size:
+  desc: null
+  value: 3
+lambda_grad:
+  desc: null
+  value: 0.1
+lr_d:
+  desc: null
+  value: 0.0005
+lr_g:
+  desc: null
+  value: 0.0005
+manualSeed:
+  desc: null
+  value: 7559
+nc_current:
+  desc: null
+  value: 12
+netD:
+  desc: null
+  value: ''
+netG:
+  desc: null
+  value: ''
+nfc:
+  desc: null
+  value: 64
+niter:
+  desc: null
+  value: 4000
+noise_amp:
+  desc: null
+  value: 1.0
+noise_update:
+  desc: null
+  value: 0.1
+not_cuda:
+  desc: null
+  value: 0
+num_layer:
+  desc: null
+  value: 3
+num_scales:
+  desc: null
+  value: 3
+out:
+  desc: null
+  value: output
+out_:
+  desc: null
+  value: output/test5/
+outf:
+  desc: null
+  value: '0'
+pad_with_noise:
+  desc: null
+  value: false
+scales:
+  desc: null
+  value:
+  - 0.88
+  - 0.75
+  - 0.5
+seed_road:
+  desc: null
+  value: null
+stop_scale:
+  desc: null
+  value: 3
+token_insert:
+  desc: null
+  value: -2
+token_list:
+  desc: null
+  value:
+  - '!'
+  - '#'
+  - '-'
+  - '1'
+  - '@'
+  - C
+  - S
+  - U
+  - X
+  - g
+  - k
+  - t
