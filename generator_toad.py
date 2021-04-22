@@ -164,10 +164,11 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         # for i in range(len(z_curr[0][0][0])):
         #     z_curr[0][0][0][i] = 0.5
         # print(G)
-        
-        for m in range(k[0], k[1]):
-            for l in range(i[0], i[1]):
-                z_curr[0][0][m][l] = newV
+        for r in range(len(z_curr[0])):
+
+            for m in range(k[0], k[1]):
+                for l in range(i[0], i[1]):
+                    z_curr[0][r][m][l] = newV
         z_in = noise_amp * z_curr+ I_prev
         I_curr = G(z_in.detach(), I_prev, temperature=1)
 
