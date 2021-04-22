@@ -20,8 +20,8 @@ from mariokart.tokens import REPLACE_TOKENS as MARIOKART_REPLACE_TOKENS
 from mario.tokens import TOKEN_GROUPS as MARIO_TOKEN_GROUPS
 from mariokart.tokens import TOKEN_GROUPS as MARIOKART_TOKEN_GROUPS
 from mario.special_mario_downsampling import special_mario_downsampling
-
-
+from interactive_toad import gui_level
+import tkinter as tk
 from megaman.level_image_gen import LevelImageGen as MegaManLevelGen
 from megaman.tokens import REPLACE_TOKENS as MEGAMAN_REPLACE_TOKENS
 from megaman.tokens import TOKEN_GROUPS as MEGAMAN_TOKEN_GROUPS
@@ -37,7 +37,7 @@ from loderunner.tokens import TOKEN_GROUPS as LODERUNNER_TOKEN_GROUPS
 
 def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=None, scale_v=1.0, scale_h=1.0,
                      current_scale=0, gen_start_scale=0, num_samples=50, render_images=True, save_tensors=False,
-                     save_dir="random_samples"):
+                     save_dir="random_samples", interactive=False, k = (0,0), i = (0,0), newV = 0, rndm = False):
     """
     Generate samples given a pretrained TOAD-GAN (generators, noise_maps, reals, noise_amplitudes).
     Uses namespace "opt" that needs to be parsed.
@@ -79,7 +79,8 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
             m = nn.ZeroPad2d(int(n_pad))  # pad with zeros
         else:
             m = nn.ReflectionPad2d(int(n_pad))  # pad with reflected noise
-
+        ##CHANGE THIS
+        m = nn.ZeroPad2d(int(n_pad))
         # Calculate shapes to generate
         if 0 < gen_start_scale <= current_scale:  # Special case! Can have a wildly different shape through in_s
             scale_v = in_s.shape[-2] / (noise_maps[gen_start_scale-1].shape[-2] - n_pad * 2)
@@ -94,34 +95,33 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         images_prev = images_cur
         images_cur = []
 
-        # Token insertion (Experimental feature! Generator needs to be trained with it)
-        if current_scale < (opt.token_insert + 1):
-            channels = len(token_groups)
-            if in_s is not None and in_s.shape[1] != channels:
-                old_in_s = in_s
-                in_s = token_to_group(in_s, opt.token_list, token_groups)
-        else:
-            channels = len(opt.token_list)
-            if in_s is not None and in_s.shape[1] != channels:
-                old_in_s = in_s
-                in_s = group_to_token(in_s, opt.token_list, token_groups)
+        
+        channels = len(opt.token_list)
+        if in_s is not None and in_s.shape[1] != channels:
+            old_in_s = in_s
+            in_s = group_to_token(in_s, opt.token_list, token_groups)
 
         # If in_s is none or filled with zeros reshape to correct size with channels
         if in_s is None:
             in_s = torch.zeros(reals[0].shape[0], channels, *reals[0].shape[2:]).to(opt.device)
         elif in_s.sum() == 0:
             in_s = torch.zeros(1, channels, *in_s.shape[-2:]).to(opt.device)
-        print(channels)
         # Generate num_samples samples in current scale
         # for n in tqdm(range(0, 1)):
 
 
         # Get noise image
         # z_curr = generate_spatial_noise([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device) #replace with z_curr = latent_vector
-        z_curr = torch.randn([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
-        # z_curr = torch.zeros([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
+        
+        z_curr = torch.zeros([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
+        if rndm:
+            z_curr = torch.randn([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
+        # for i in range(len(z_curr[0][0][0])):
+        #     z_curr[0][0][0][i] = 0.5
+        # print(z_curr[0][0][0])
         # z_curr = torch.ones([1, channels, int(round(nzx)), int(round(nzy))], device=opt.device)
         # USE torch.tensor([LIST]) for defining a tensor outright
+        # z_curr[0][0][0][0] = 0.5
         z_curr = m(z_curr)
 
         # Set up previous image I_prev
@@ -140,7 +140,10 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         # We take the optimized noise map Z_opt as an input if we start generating on later scales
         if current_scale < gen_start_scale:
             z_curr = Z_opt
-
+        dir2save = opt.out_ + '/' + save_dir
+        # torch.save(z_curr, "%s/torch/%d_sc%d.pt" % (dir2save, 1, current_scale))
+        # z_curr = torch.load("%s/torch/%d_sc%d.pt" % (dir2save, 1, current_scale))
+        
         # Define correct token list (dependent on token insertion)
         if opt.token_insert >= 0 and z_curr.shape[1] == len(token_groups):
             token_list = [list(group.keys())[0] for group in token_groups]
@@ -150,7 +153,22 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         ###########
         # Generate!
         ###########
-        z_in = noise_amp * z_curr + I_prev
+        # for m in range(len(z_curr[0])):
+        #     for k in range(len(z_curr[0][0])):
+        #         for i in range(len(z_curr[0][0][0])):
+
+        #             # if i >= len(z_curr[0][0][0])-3:
+        #                 h = int(len(z_curr[0][0][0])/2)
+        #                 # print(h, len(z_curr[0][0][0]))
+        #                 z_curr[0][m][k][h] = 1
+        # for i in range(len(z_curr[0][0][0])):
+        #     z_curr[0][0][0][i] = 0.5
+        # print(G)
+        
+        for m in range(k[0], k[1]):
+            for l in range(i[0], i[1]):
+                z_curr[0][0][m][l] = newV
+        z_in = noise_amp * z_curr+ I_prev
         I_curr = G(z_in.detach(), I_prev, temperature=1)
 
         # Save all scales
@@ -158,8 +176,8 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         # Save scale 0 and last scale
         # if current_scale == 0 or current_scale == len(reals) - 1:
         # Save only last scale
-        if current_scale == len(reals) - 1:
-            dir2save = opt.out_ + '/' + save_dir
+        if current_scale == len(reals) - 1 and not interactive:
+            
 
             # Make directories
             try:
@@ -174,19 +192,25 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
 
             # Convert to ascii level
             level = one_hot_to_ascii_level(I_curr.detach(), token_list)
-
             # Render and save level image
             if render_images:
                 img = opt.ImgGen.render(level)
+                #render the image
                 img.save("%s/img/%d_sc%d.png" % (dir2save, 0, current_scale))
+            
+            if interactive:
+                gui_level(img)
+                print("success!!")
 
             # Save level txt
             with open("%s/txt/%d_sc%d.txt" % (dir2save, 0, current_scale), "w") as f:
                 f.writelines(level)
+            
 
             # Save torch tensor
             if save_tensors:
                 torch.save(I_curr, "%s/torch/%d_sc%d.pt" % (dir2save, 0, current_scale))
+            
 
         # Append current image
         images_cur.append(I_curr)
@@ -194,9 +218,39 @@ def generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=
         # Go to next scale
         current_scale += 1
 
-    return I_curr.detach()  # return last generated image (usually unused)
+    return I_curr, G, z_in, noise_amp, z_curr, I_prev  # return last generated image (usually unused)
+def randomize():
+    I_curr, G, z_in, noise_amp, z_curr, I_prev = generate_samples(generators, noise_maps, reals, noise_amplitudes, opt,
+                    scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples, interactive=True, rndm=True)
+    #z_curr[0][0][25][20] = newV
+# print(len(z_curr[0][0]), len(z_curr[0][0][0]))
 
+    z_in = noise_amp * z_curr+ I_prev
 
+    I_curr = G(z_in.detach(), I_prev, temperature=1)
+    level = one_hot_to_ascii_level(I_curr.detach(), opt.token_list)
+
+    # Render and save level image
+    img = opt.ImgGen.render(level)
+    gui_level(img)
+def slide_change():
+    newV = slider.get()
+    k = (1,yvalue.get())
+    i = (1,xvalue.get())
+
+    I_curr, G, z_in, noise_amp, z_curr, I_prev = generate_samples(generators, noise_maps, reals, noise_amplitudes, opt,
+                    scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples, interactive=True, k =k, i=i, newV=newV)
+    #z_curr[0][0][25][20] = newV
+# print(len(z_curr[0][0]), len(z_curr[0][0][0]))
+
+    z_in = noise_amp * z_curr+ I_prev
+
+    I_curr = G(z_in.detach(), I_prev, temperature=1)
+    level = one_hot_to_ascii_level(I_curr.detach(), opt.token_list)
+
+    # Render and save level image
+    img = opt.ImgGen.render(level)
+    gui_level(img)
 if __name__ == '__main__':
     # NOTICE: The "output" dir is where the generator is located as with main.py, even though it is the "input" here
 
@@ -261,13 +315,46 @@ if __name__ == '__main__':
     # Get input shape for in_s
     real_down = downsample(1, [[opt.scale_v, opt.scale_h]], real, opt.token_list)
     real_down = real_down[0]
-    in_s = torch.zeros_like(real_down, device=opt.device)
+    #in_s = torch.zeros_like(real_down, device=opt.device)
     prefix = "arbitrary"
 
     # Directory name
     s_dir_name = "%s_random_samples_v%.5f_h%.5f_st%d" % (prefix, opt.scale_v, opt.scale_h, opt.gen_start_scale)
+    inetactive = True
+    if inetactive:
+        root = tk.Tk()
+        root.geometry("1750x500")
+        
+        I_curr, G, z_in, noise_amp, z_curr, I_prev = generate_samples(generators, noise_maps, reals, noise_amplitudes, opt,
+                        scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples, interactive=True)
+        print(I_curr)
+    
+        level = one_hot_to_ascii_level(I_curr.detach(), opt.token_list)
+        # print(z_in)
+        # Render and save level image
+        img = opt.ImgGen.render(level)
+        gui_level(img)
+        previousValue = 0.0
+        exit_button = tk.Button(root, text="Exit", command=root.destroy)
+        exit_button.pack(pady=20)
+        exit_button.place(x=0,y=0)
+        #get the trained TOAD-GAN, now can mess with stuff
+        slider = tk.Scale(root, from_=-1.0, to=1.0, resolution=0.05, orient=tk.HORIZONTAL, label="LV")
+        slider.place(x=0, y=50)
+        yvalue = tk.Scale(root, from_=1, to=25, orient=tk.HORIZONTAL, label="y-distance")
+        yvalue.place(x=0, y=150)
+        xvalue = tk.Scale(root, from_=1, to=80, orient=tk.HORIZONTAL, label="x-distance")
+        xvalue.place(x=0, y=225)
+        btn = tk.Button(root, text="generate (from zeros)!", command=slide_change)
+        btn.place(x=0, y=300)
+        btn2 = tk.Button(root, text="randomize ALL and generate", command=randomize)
+        btn2.place(x = 0, y = 350)
 
-    generate_samples(generators, noise_maps, reals, noise_amplitudes, opt, in_s=in_s,
+        root.mainloop()
+        
+            
+    else:
+        generate_samples(generators, noise_maps, reals, noise_amplitudes, opt,
                         scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples)
 
 
