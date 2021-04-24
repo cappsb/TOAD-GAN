@@ -97,6 +97,9 @@ public class MAPElites<T> implements SteadyStateEA<T> {
 		this.iterationsWithoutElite = 0; // Not accurate on resume		
 	}
 	
+	public BinLabels getBinLabelsClass() {
+		return archive.getBinLabelsClass();
+	}
 	/**
 	 * Get the archive
 	 * @return

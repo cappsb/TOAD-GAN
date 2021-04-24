@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -40,8 +41,6 @@ import icecreamyou.LodeRunner.LodeRunner;
 
 /**
  * 
- * Evolve Lode Runner levels
- * 
  * @author kdste
  *
  * @param <T>
@@ -55,7 +54,6 @@ public abstract class LodeRunnerLevelTask<T> extends NoisyLonerTask<T> {
 
 	// Calculated in oneEval, so it can be passed on the getBehaviorVector
 	private ArrayList<Double> behaviorVector;
-	private Pair<int[],Double> oneMAPEliteBinIndexScorePair;
 
 	/**
 	 * Registers all fitness functions that are used, and other scores 
@@ -179,16 +177,6 @@ public abstract class LodeRunnerLevelTask<T> extends NoisyLonerTask<T> {
 		return 0; //not used 
 	}
 
-	// This might break the Level Sequence Task, but that isn't really used, so will fix later if necessary.
-	// In a pinch, this whole method can be commented out to make the level sequence work.
-	//@Override
-//	public Score<T> evaluate(Genotype<T> individual) {
-//		Score<T> result = super.evaluate(individual);
-//		if(MMNEAT.ea instanceof MAPElites)
-//			result.assignMAPElitesBinAndScore(oneMAPEliteBinIndexScorePair.t1, oneMAPEliteBinIndexScorePair.t2);
-//		return result;
-//	}
-	
 	/**
 	 * Does one evaluation with the A* algorithm to see if the level is beatable 
 	 * @param Genotype<T> 
@@ -321,59 +309,59 @@ public abstract class LodeRunnerLevelTask<T> extends NoisyLonerTask<T> {
 			}
 		}
 
-//		// LodeRunnerLevelSequenceTask has it's own MAP Elites binning rules defined in LodeRunnerLevelSequenceTask
-//		if(MMNEAT.ea instanceof MAPElites && !(MMNEAT.task instanceof LodeRunnerLevelSequenceTask)) {
-//			// Assign to the behavior vector before using MAP-Elites
-//			//double[] archiveArray = null;
-//			final int BINS_PER_DIMENSION = LodeRunnerMAPElitesPercentConnectedGroundAndLaddersBinLabels.BINS_PER_DIMENSION;
-//			int dim1, dim2, dim3; //declares bin dimensions 
-//			double SCALE_GROUND_LADDERS = BINS_PER_DIMENSION/4.0; //scales by 1/4 of the dimension to go in steps of 4
-//			//gets correct indices for all dimensions based on percent and multiplied by 10 to be a non decimal 
-//			int connectedIndex = Math.min((int)(percentConnected*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1); 
-//			
-//			// ground scaling is frustrating. percentGroundseems to land between 0.1 and 0.43. So, subtract 0.1 to get to
-//			// 0.0 to 0.33, then multiply by 3 to get 0.0 to 0.99
-//			int groundIndex = Math.max(0, Math.min((int)((percentGround-0.1)*3*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1));
-//			int laddersIndex = Math.min((int)(percentLadders*SCALE_GROUND_LADDERS*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1);
-//			double binScore = simpleAStarDistance;
-//			if(Parameters.parameters.booleanParameter("lodeRunnerAllowsAStarConnectivityCombo")) {
-//				// Combo of connectivity and A* overwhelms regular A*
-//				binScore = comboFitness;
-//			}
-//
-//			if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentConnectedGroundAndLaddersBinLabels) {
-//				//Initializes bin dimensions 
-//				dim1 = connectedIndex; //connectivity
-//				dim2 = groundIndex; //percent ground scaled
-//				dim3 = laddersIndex; //percent ladders scaled
-//				//becomes the behavior vector 
-//				//archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
-//			} else if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentConnectedNumGoldAndEnemiesBinLabels) {
-//				double treasureScale = 5.0; //scales bins to be in groups of 5, [0-5][5-10]...
-//				double enemyScale = 2.0; //scales bins to be in groups of 2, [0-2][2-4]...
-//				//gets correct indices for treasure and enemies
-//				int treasureIndex = (int) Math.min(numTreasure/treasureScale, BINS_PER_DIMENSION-1);
-//				int enemyIndex = (int) Math.min(numEnemies/enemyScale, BINS_PER_DIMENSION-1);
-//				dim1 = connectedIndex; //connectivity
-//				dim2 = treasureIndex;//number of treasures scaled 
-//				dim3 = enemyIndex; //number of enemies scaled
-//				//becomes the behavior vector 
-//				//archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
-//			} else if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentGroundNumGoldAndEnemiesBinLabels) {
-//				double treasureScale = 5.0; //scales bins to be in groups of 5, [0-5][5-10]...
-//				double enemyScale = 2.0; //scales bins to be in groups of 2, [0-2][2-4]...
-//				//gets correct indices for treasure and enemies
-//				int treasureIndex = (int) Math.min(numTreasure/treasureScale, BINS_PER_DIMENSION-1);
-//				int enemyIndex = (int) Math.min(numEnemies/enemyScale, BINS_PER_DIMENSION-1);
-//				dim1 = groundIndex; //ground percentage
-//				dim2 = treasureIndex;//number of treasures scaled 
-//				dim3 = enemyIndex; //number of enemies scaled
-//				//becomes the behavior vector 
-//				//archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
-//			} 
-//			else {
-//				throw new RuntimeException("A Valid Binning Scheme For Lode Runner Was Not Specified");
-			//}
+		// LodeRunnerLevelSequenceTask has it's own MAP Elites binning rules defined in LodeRunnerLevelSequenceTask
+		if(MMNEAT.ea instanceof MAPElites && !(MMNEAT.task instanceof LodeRunnerLevelSequenceTask)) {
+			// Assign to the behavior vector before using MAP-Elites
+			double[] archiveArray = null;
+			final int BINS_PER_DIMENSION = LodeRunnerMAPElitesPercentConnectedGroundAndLaddersBinLabels.BINS_PER_DIMENSION;
+			int dim1, dim2, dim3; //declares bin dimensions 
+			double SCALE_GROUND_LADDERS = BINS_PER_DIMENSION/4.0; //scales by 1/4 of the dimension to go in steps of 4
+			//gets correct indices for all dimensions based on percent and multiplied by 10 to be a non decimal 
+			int connectedIndex = Math.min((int)(percentConnected*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1); 
+			
+			// ground scaling is frustrating. percentGroundseems to land between 0.1 and 0.43. So, subtract 0.1 to get to
+			// 0.0 to 0.33, then multiply by 3 to get 0.0 to 0.99
+			int groundIndex = Math.max(0, Math.min((int)((percentGround-0.1)*3*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1));
+			int laddersIndex = Math.min((int)(percentLadders*SCALE_GROUND_LADDERS*BINS_PER_DIMENSION), BINS_PER_DIMENSION-1);
+			double binScore = simpleAStarDistance;
+			if(Parameters.parameters.booleanParameter("lodeRunnerAllowsAStarConnectivityCombo")) {
+				// Combo of connectivity and A* overwhelms regular A*
+				binScore = comboFitness;
+			}
+
+			if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentConnectedGroundAndLaddersBinLabels) {
+				//Initializes bin dimensions 
+				dim1 = connectedIndex; //connectivity
+				dim2 = groundIndex; //percent ground scaled
+				dim3 = laddersIndex; //percent ladders scaled
+				//becomes the behavior vector 
+				archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
+			} else if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentConnectedNumGoldAndEnemiesBinLabels) {
+				double treasureScale = 5.0; //scales bins to be in groups of 5, [0-5][5-10]...
+				double enemyScale = 2.0; //scales bins to be in groups of 2, [0-2][2-4]...
+				//gets correct indices for treasure and enemies
+				int treasureIndex = (int) Math.min(numTreasure/treasureScale, BINS_PER_DIMENSION-1);
+				int enemyIndex = (int) Math.min(numEnemies/enemyScale, BINS_PER_DIMENSION-1);
+				dim1 = connectedIndex; //connectivity
+				dim2 = treasureIndex;//number of treasures scaled 
+				dim3 = enemyIndex; //number of enemies scaled
+				//becomes the behavior vector 
+				archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
+			} else if(((MAPElites<T>) MMNEAT.ea).getBinLabelsClass() instanceof LodeRunnerMAPElitesPercentGroundNumGoldAndEnemiesBinLabels) {
+				double treasureScale = 5.0; //scales bins to be in groups of 5, [0-5][5-10]...
+				double enemyScale = 2.0; //scales bins to be in groups of 2, [0-2][2-4]...
+				//gets correct indices for treasure and enemies
+				int treasureIndex = (int) Math.min(numTreasure/treasureScale, BINS_PER_DIMENSION-1);
+				int enemyIndex = (int) Math.min(numEnemies/enemyScale, BINS_PER_DIMENSION-1);
+				dim1 = groundIndex; //ground percentage
+				dim2 = treasureIndex;//number of treasures scaled 
+				dim3 = enemyIndex; //number of enemies scaled
+				//becomes the behavior vector 
+				archiveArray = new double[BINS_PER_DIMENSION*BINS_PER_DIMENSION*BINS_PER_DIMENSION];
+			}
+			else {
+				throw new RuntimeException("A Valid Binning Scheme For Lode Runner Was Not Specified");
+			}
 			BufferedImage levelSolution = null;
 			BufferedImage levelImage = null;
 			try {
@@ -386,8 +374,8 @@ public abstract class LodeRunnerLevelTask<T> extends NoisyLonerTask<T> {
 				System.out.println("Could not get image");
 			} 
 			//this method makes the bins and saves the level images in the archive directory 
-			//setBinsAndSaveLevelImages(genotypeId, levelImage, levelSolution, dim1, dim2, dim3, binScore);
-		//}
+			setBinsAndSaveLevelImages(genotypeId, levelImage, levelSolution, archiveArray, dim1, dim2, dim3, BINS_PER_DIMENSION, binScore);
+		}
 
 
 		return new Pair<double[],double[]>(ArrayUtil.doubleArrayFromList(fitnesses), otherScores);
@@ -399,49 +387,48 @@ public abstract class LodeRunnerLevelTask<T> extends NoisyLonerTask<T> {
 	 * @param genotypeId Genotype ID
 	 * @param levelImage Standard render level
 	 * @param levelSolution Solution path of rendered level
-	 * @param dim1 Dimension of connectivity
-	 * @param dim2 Dimension of ground 
-	 * @param dim3 Dimension of ladders 
+	 * @param archiveArray Behavior vector 
+	 * @param dimConnected Dimension of connectivity
+	 * @param dimGround Dimension of ground 
+	 * @param dimLadders Dimension of ladders 
+	 * @param BINS_PER_DIMENSION Bin Dimension = 10 right now 
 	 * @param binScore AStarPath length 
 	 */
-//	@SuppressWarnings("unchecked")
-//	private void setBinsAndSaveLevelImages(long genotypeId, BufferedImage levelImage,
-//			BufferedImage levelSolution, int dim1, int dim2, int dim3,
-//			double binScore) {
-//		
-//		oneMAPEliteBinIndexScorePair = new Pair<int[], Double>(new int[] {dim1, dim2, dim3}, binScore);
-//
-//		//gets the index in the one dimensional array 
-////		int binIndex = (dimConnected*BINS_PER_DIMENSION + dimGround)*BINS_PER_DIMENSION + dimLadders;
-////		Arrays.fill(archiveArray, Double.NEGATIVE_INFINITY); // Worst score in all dimensions
-////		archiveArray[binIndex] = binScore; //adds binScore at binIndex 
-//		
-//		System.out.println("["+dim1+"]["+dim2+"]["+dim3+"] = "+binScore);
-//		
-////		behaviorVector = ArrayUtil.doubleVectorFromArray(archiveArray);
-//		//saving images in bins 
-//		if(CommonConstants.netio) {
-//			System.out.println("Saving rendered level and solution path for level");
-//			Archive<T> archive = ((MAPElites<T>) MMNEAT.ea).getArchive();
-//			List<String> binLabels = archive.getBinMapping().binLabels();
-//			// Index in flattened bin array
-//			Score<T> elite = archive.getElite(oneMAPEliteBinIndexScorePair.t1);
-//			//if that index is empty or the binScores is greater than what was there before
-//			if(elite==null || binScore > elite.behaviorIndexScore()) {
-//				//formats to be 7 digits before the decimal, and 5 digits after, %7.5f
-//				//only doing direct right now, but will need to add CPPN label in addition, like in MarioLevelTask, if we start to use a CPPN
-//				String fileNameImage =  "_Direct-"+String.format("%7.5f", binScore) +"_"+ genotypeId + "-LevelRender" +".png";
-//				String binPath = archive.getArchiveDirectory() + File.separator + binLabels.get(archive.getBinMapping().oneDimensionalIndex(oneMAPEliteBinIndexScorePair.t1));
-//				String fullNameImage = binPath + "_" + fileNameImage;
-//				System.out.println(fullNameImage);
-//				GraphicsUtil.saveImage(levelImage, fullNameImage);// saves the rendered level without the solution path
-//				String fileNameSolution = "_Direct-"+String.format("%7.5f", binScore) +"_"+ genotypeId + "-SolutionRender" +".png";
-//				String fullNameSolution = binPath + "_" +fileNameSolution;
-//				System.out.println(fullNameSolution);
-//				GraphicsUtil.saveImage(levelSolution, fullNameSolution);// saves the rendered level with the solution path
-//			}
-//		}
-//	}
+	@SuppressWarnings("unchecked")
+	private void setBinsAndSaveLevelImages(long genotypeId, BufferedImage levelImage,
+			BufferedImage levelSolution, double[] archiveArray, int dimConnected, int dimGround, int dimLadders,
+			final int BINS_PER_DIMENSION, double binScore) {
+		//gets the index in the one dimensional array 
+		int binIndex = (dimConnected*BINS_PER_DIMENSION + dimGround)*BINS_PER_DIMENSION + dimLadders;
+		Arrays.fill(archiveArray, Double.NEGATIVE_INFINITY); // Worst score in all dimensions
+		archiveArray[binIndex] = binScore; //adds binScore at binIndex 
+		
+		System.out.println("["+dimConnected+"]["+dimGround+"]["+dimLadders+"] = "+binScore);
+		
+		behaviorVector = ArrayUtil.doubleVectorFromArray(archiveArray);
+		//saving images in bins 
+		if(CommonConstants.netio) {
+			System.out.println("Saving rendered level and solution path for level");
+			Archive<T> archive = ((MAPElites<T>) MMNEAT.ea).getArchive();
+			List<String> binLabels = archive.getBinMapping().binLabels();
+			// Index in flattened bin array
+			Score<T> elite = archive.getElite(binIndex);
+			//if that index is empty or the binScores is greater than what was there before
+			if(elite==null || binScore > elite.behaviorVector.get(binIndex)) {
+				//formats to be 7 digits before the decimal, and 5 digits after, %7.5f
+				//only doing direct right now, but will need to add CPPN label in addition, like in MarioLevelTask, if we start to use a CPPN
+				String fileNameImage =  "_Direct-"+String.format("%7.5f", binScore) +"_"+ genotypeId + "-LevelRender" +".png";
+				String binPath = archive.getArchiveDirectory() + File.separator + binLabels.get(binIndex);
+				String fullNameImage = binPath + "_" + fileNameImage;
+				System.out.println(fullNameImage);
+				GraphicsUtil.saveImage(levelImage, fullNameImage);// saves the rendered level without the solution path
+				String fileNameSolution = "_Direct-"+String.format("%7.5f", binScore) +"_"+ genotypeId + "-SolutionRender" +".png";
+				String fullNameSolution = binPath + "_" +fileNameSolution;
+				System.out.println(fullNameSolution);
+				GraphicsUtil.saveImage(levelSolution, fullNameSolution);// saves the rendered level with the solution path
+			}
+		}
+	}
 
 	/**
 	 * Data calculated in oneEval and returned here
