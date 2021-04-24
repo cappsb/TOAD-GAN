@@ -32,20 +32,21 @@ public class LodeRunnerRenderUtil {
 	public static final int LODE_RUNNER_TILE_Y = 8; // y length of an individual tile 
 	public static final int LODE_RUNNER_COLUMNS = 32; // This is actually the room height from the original game, since VGLC rotates rooms
 	public static final int LODE_RUNNER_ROWS = 22; // Equivalent to width in original game
+	public static final int LODE_RUNNER_TOAD_GAN_ROWS = 110; // Equivalent to width in original game
 	public static BufferedImage FINAL_RENDER; //gets the final rendered image 
 	
 	// These are images of the individual tiles that make up Lode Runner levels. Only need to load once.
 	private static BufferedImage[] tileList = null;
 	
 	public static final int RENDERED_IMAGE_WIDTH = LODE_RUNNER_TILE_X*LODE_RUNNER_COLUMNS; //width of the final rendered level 
-	public static final int RENDERED_IMAGE_HEIGHT = LODE_RUNNER_TILE_Y*LODE_RUNNER_ROWS; //height of the final rendered level 
+	public static final int RENDERED_IMAGE_HEIGHT = LODE_RUNNER_TILE_Y*LODE_RUNNER_TOAD_GAN_ROWS; //height of the final rendered level 
 	
 	//constants for rendering iceCreamYou levels 
 	public static final String ICE_CREAM_YOU_TILE_PATH = "src/main/java/icecreamyou/LodeRunner/"; //file path for tiles 
 	public static final int ICE_CREAM_YOU_TILE_X = 30; // x length of an individual tile 
 	public static final int ICE_CREAM_YOU_TILE_Y = 40; // y length of an individual tile 
 	public static final int ICE_CREAM_YOU_IMAGE_WIDTH = ICE_CREAM_YOU_TILE_X*LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS;
-	public static final int ICE_CREAM_YOU_IMAGE_HEIGHT = ICE_CREAM_YOU_TILE_Y*LodeRunnerRenderUtil.LODE_RUNNER_ROWS;
+	public static final int ICE_CREAM_YOU_IMAGE_HEIGHT = ICE_CREAM_YOU_TILE_Y*LodeRunnerRenderUtil.LODE_RUNNER_TOAD_GAN_ROWS;
 	private static BufferedImage[] iceCreamYouTiles = null;
 	
 	/**
@@ -56,22 +57,22 @@ public class LodeRunnerRenderUtil {
 	 */
 	public static void main(String[] args) throws IOException {
 		//original mapping with 8 tiles 
-//		List<List<Integer>> list = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevel(LODE_RUNNER_LEVEL_PATH + "Level 1.txt");
-//		BufferedImage[] images = loadImages(LODE_RUNNER_TILE_PATH); //Initializes the array that hold the tile images 
-//		FINAL_RENDER = getBufferedImage(list, images); //puts the final rendered level into a buffered image 
+		List<List<Integer>> list = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevel("C:\\Users\\kdste\\Documents\\GitHub\\TOAD-GAN\\output\\wandb\\run-20210416_122819-za0htsts\\files\\random_samples\\txt\\0_sc3.txt");
+		//BufferedImage[] images = loadImagesNoSpawnTwoGround(LODE_RUNNER_TILE_PATH); //Initializes the array that hold the tile images 
+		//FINAL_RENDER = getBufferedImage(list, images); //puts the final rendered level into a buffered image 
 		//no spawn mapping with 6 tiles 
-		List<List<Integer>> list = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevel(LODE_RUNNER_LEVEL_PATH + "Level 1.txt");
-//		BufferedImage[] images = loadImagesNoSpawnTwoGround(LODE_RUNNER_TILE_PATH); //Initializes the array that hold the tile images 
-//		FINAL_RENDER = getBufferedImage(list, images); //puts the final rendered level into a buffered image
-		BufferedImage[] images = loadIceCreamYouTiles(ICE_CREAM_YOU_TILE_PATH);
-		BufferedImage image = createIceCreamYouImage(list, ICE_CREAM_YOU_IMAGE_WIDTH, ICE_CREAM_YOU_IMAGE_HEIGHT, images);
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(ICE_CREAM_YOU_IMAGE_WIDTH, ICE_CREAM_YOU_IMAGE_HEIGHT, Image.SCALE_FAST)));
-		panel.add(label);
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+		//List<List<Integer>> list = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevel("C:\\Users\\kdste\\Documents\\GitHub\\TOAD-GAN\\output\\wandb\\run-20210416_122819-za0htsts\\files\\random_samples\\txt\\0_sc3.txt");
+		BufferedImage[] images = loadImagesNoSpawnTwoGround(LODE_RUNNER_TILE_PATH); //Initializes the array that hold the tile images 
+		FINAL_RENDER = getBufferedImage(list, images); //puts the final rendered level into a buffered image
+		//BufferedImage[] images = loadIceCreamYouTiles(ICE_CREAM_YOU_TILE_PATH);
+//		BufferedImage image = createIceCreamYouImage(list, ICE_CREAM_YOU_IMAGE_WIDTH, ICE_CREAM_YOU_IMAGE_HEIGHT, images);
+//		JFrame frame = new JFrame();
+//		JPanel panel = new JPanel();
+//		JLabel label = new JLabel(new ImageIcon(image.getScaledInstance(RENDERED_IMAGE_WIDTH, RENDERED_IMAGE_HEIGHT, Image.SCALE_FAST)));
+//		panel.add(label);
+//		frame.add(panel);
+//		frame.pack();
+//		frame.setVisible(true);
 		
 	}
 	
@@ -86,7 +87,7 @@ public class LodeRunnerRenderUtil {
 			JFrame frame = new JFrame();
 			JPanel panel = new JPanel();
 			JLabel label = new JLabel(new ImageIcon(visualPath.getScaledInstance(LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
-					LodeRunnerRenderUtil.LODE_RUNNER_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, Image.SCALE_FAST)));
+					LodeRunnerRenderUtil.LODE_RUNNER_TOAD_GAN_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, Image.SCALE_FAST)));
 			panel.add(label);
 			frame.add(panel);
 			frame.pack();

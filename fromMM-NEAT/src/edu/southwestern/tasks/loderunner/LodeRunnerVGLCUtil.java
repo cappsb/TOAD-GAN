@@ -17,6 +17,7 @@ public class LodeRunnerVGLCUtil {
 	public static final String LODE_RUNNER_LEVEL_PATH = "data/VGLC/Lode Runner/Processed/";
 	public static final int LODE_RUNNER_COLUMNS = 32; // This is actually the room width from the original game, since VGLC rotates rooms
 	public static final int LODE_RUNNER_ROWS = 22; // Equivalent to height in original game
+	public static final int LODE_RUNNER_TOAD_GAN_ROWS = 110;
 	public static final int ICE_CREAM_YOU_WIDTH = 960;
 	public static final int ICE_CREAM_YOU_HEIGHT = 880;
 	
@@ -68,7 +69,7 @@ public class LodeRunnerVGLCUtil {
 	 */
 	public static List<List<Integer>> convertLodeRunnerLevelFileVGLCtoListOfLevel(String fileName) {
 		String[] level = new IO().readFile(fileName);
-		List<List<Integer>> complete = new ArrayList<>(LODE_RUNNER_ROWS);
+		List<List<Integer>> complete = new ArrayList<>(LODE_RUNNER_TOAD_GAN_ROWS);
 		//loops through levels to get characters and convert them 
 		for(int i = 0; i < level.length; i++) { 
 			List<Integer> row = new ArrayList<>(LODE_RUNNER_COLUMNS);//creates new List to be a new row of the JSON 
@@ -92,7 +93,7 @@ public class LodeRunnerVGLCUtil {
 	 */
 	public static List<List<Integer>> convertLodeRunnerLevelFileVGLCtoListOfLevelForLodeRunnerState(String fileName) {
 		String[] level = new IO().readFile(fileName);
-		List<List<Integer>> complete = new ArrayList<>(LODE_RUNNER_ROWS);
+		List<List<Integer>> complete = new ArrayList<>(LODE_RUNNER_TOAD_GAN_ROWS);
 		//loops through levels to get characters and convert them 
 		for(int i = 0; i < level.length; i++) { 
 			List<Integer> row = new ArrayList<>(LODE_RUNNER_COLUMNS);//creates new List to be a new row of the JSON 
@@ -283,19 +284,19 @@ public class LodeRunnerVGLCUtil {
 		case 0:
 			return "";
 		case 1: //gold, passable, pickupable
-			return "coin:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "coin:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 2: //enemy, damaging 
-			return "enemy:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "enemy:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 3: //diggable ground, solid 
-			return "diggable:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "diggable:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 4: //ladder, passable, climbable
-			return "ladder:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "ladder:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 5: //rope, passable, climbable
-			return "bar:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n"; 
+			return "bar:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n"; 
 		case 6://regular ground, solid
-			return "solid:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "solid:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 7: 
-			return "player:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+",1\n";
+			return "player:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+",1\n";
 		default:
 			throw new IllegalArgumentException("Invalid Lode Runner tile from VGLV: " + tile);
 		}
@@ -313,19 +314,19 @@ public class LodeRunnerVGLCUtil {
 		case '.':
 			return "";
 		case 'M': 
-			return "player:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+",1\n";
+			return "player:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+",1\n";
 		case 'B'://regular ground, solid
-			return "solid:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "solid:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 'b': //diggable ground, solid 
-			return "diggable:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "diggable:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case '#': //ladder, passable, climbable
-			return "ladder:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "ladder:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case '-': //rope, passable, climbable
-			return "bar:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n"; 
+			return "bar:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n"; 
 		case 'E': //enemy, damaging 
-			return "enemy:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n";
+			return "enemy:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n";
 		case 'G': //gold, passable, pickupable
-			return "coin:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_ROWS)+"\n"; 
+			return "coin:"+y*(ICE_CREAM_YOU_WIDTH/LODE_RUNNER_COLUMNS)+","+x*(ICE_CREAM_YOU_HEIGHT/LODE_RUNNER_TOAD_GAN_ROWS)+"\n"; 
 		default:
 			throw new IllegalArgumentException("Invalid Lode Runner tile from VGLV: " + tile);
 		}

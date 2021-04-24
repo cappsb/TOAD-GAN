@@ -296,7 +296,10 @@ if __name__ == '__main__':
         line = sys.stdin.readline()
         lv = numpy.array(json.loads(line))
         #latent_vector = torch.FloatTensor( lv ).view(1, nz, 1, 1)  #also known as z_curr
+        print(lv)
         latent_vector = torch.tensor(lv)
+        
+        print(latent_vector)
         I_curr, G, z_in, noise_amp, z_curr, I_prev = generate_samples(generators, noise_maps, reals, noise_amplitudes, opt,
                         scale_v=opt.scale_v, scale_h=opt.scale_h, save_dir=s_dir_name, num_samples=opt.num_samples, z_curr = latent_vector)
     level = one_hot_to_ascii_level(I_curr.detach(), opt.token_list)
