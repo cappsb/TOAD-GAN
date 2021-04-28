@@ -131,18 +131,19 @@ public class LodeRunnerState extends State<LodeRunnerState.LodeRunnerAction>{
 		Parameters.initializeParameterCollections(args);
 		//converts Level in VGLC to hold all 8 tiles so we can get the real spawn point from the level 
 		//List<List<Integer>> level = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevelForLodeRunnerState(LodeRunnerVGLCUtil.LODE_RUNNER_LEVEL_PATH+"Level 1.txt"); //converts to JSON
-		List<List<Integer>> level = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevelForLodeRunnerState("C:\\Users\\kdste\\Documents\\GitHub\\TOAD-GAN\\output\\wandb\\run-20210416_122819-za0htsts\\files\\random_samples\\txt\\0_sc3.txt"); //converts to JSON
+		List<List<Integer>> level = LodeRunnerVGLCUtil.convertLodeRunnerLevelFileVGLCtoListOfLevelForLodeRunnerState("C:\\Users\\kdste\\Documents\\GitHub\\TOAD-GAN\\output\\wandb\\run-20210416_122819-za0htsts\\files\\random_samples\\txt\\34_sc3.txt"); //converts to JSON
+		 
 		LodeRunnerState start = new LodeRunnerState(level);
-		start.setSpawnFromVGLC(level);
+		
 		Search<LodeRunnerAction,LodeRunnerState> search = new AStarSearch<>(LodeRunnerState.manhattanToFarthestGold);
 		HashSet<LodeRunnerState> mostRecentVisited = null;
 		ArrayList<LodeRunnerAction> actionSequence = null;
 		try {
 			//tries to find a solution path to solve the level, tries as many time as specified by the last int parameter 
 			//represented by red x's in the visualization 
-//			actionSequence = ((AStarSearch<LodeRunnerAction, LodeRunnerState>) search).search(start, true, Parameters.parameters.integerParameter( "aStarSearchBudget"));
+			//actionSequence = ((AStarSearch<LodeRunnerAction, LodeRunnerState>) search).search(start, true, Parameters.parameters.integerParameter( "aStarSearchBudget"));
 			//actionSequence = ((AStarSearch<LodeRunnerAction, LodeRunnerState>) search).search(start, true, 145000); // Fails on Level 4 with only 9 treasures
-			actionSequence = ((AStarSearch<LodeRunnerAction, LodeRunnerState>) search).search(start, true, 500000); // Succeeds on Level 4 with only 9 treasures
+			actionSequence = ((AStarSearch<LodeRunnerAction, LodeRunnerState>) search).search(start, true, 600000); // Succeeds on Level 4 with only 9 treasures
 		} catch(Exception e) {
 			System.out.println("failed search");
 			e.printStackTrace();
@@ -160,6 +161,8 @@ public class LodeRunnerState extends State<LodeRunnerState.LodeRunnerAction>{
 				JPanel panel = new JPanel();
 				JLabel label = new JLabel(new ImageIcon(visualPath.getScaledInstance(LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
 						LodeRunnerRenderUtil.LODE_RUNNER_TOAD_GAN_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, Image.SCALE_FAST)));
+//				JLabel label = new JLabel(new ImageIcon(visualPath.getScaledInstance(LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
+//						LodeRunnerRenderUtil.LODE_RUNNER_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, Image.SCALE_FAST)));
 				panel.add(label);
 				frame.add(panel);
 				frame.pack();
@@ -228,7 +231,7 @@ public class LodeRunnerState extends State<LodeRunnerState.LodeRunnerAction>{
 		boolean done = false;
 		List<Point> empty = new ArrayList<>();
 		for(int i = 0; !done && i < level.size(); i++) {
-			for(int j = 0; !done && j < level.get(i).size()/5; j++){
+			for(int j = 0; !done && j < level.get(i).size(); j++){
 				tile = level.get(i).get(j);
 				//System.out.println("The tile at " + j + "," + i + " = " +tile);
 				if(tile == LODE_RUNNER_TILE_EMPTY) {//7 maps to spawn point  
@@ -256,7 +259,7 @@ public class LodeRunnerState extends State<LodeRunnerState.LodeRunnerAction>{
 	 */
 	public LodeRunnerState(List<List<Integer>> level) {
 		//this(level, getSpawnFromVGLC(level), Parameters.parameters.booleanParameter("allowWeirdLodeRunnerActions"));
-		this(level, getSpawnFromVGLC(level), Parameters.parameters.booleanParameter("allowWeirdLodeRunnerActions"));
+		this(level, setSpawnFromVGLC(level), Parameters.parameters.booleanParameter("allowWeirdLodeRunnerActions"));
 	}
 
 	/**
@@ -331,6 +334,8 @@ public class LodeRunnerState extends State<LodeRunnerState.LodeRunnerAction>{
 			//creates a buffered image from the level to be displayed 
 			visualPath = LodeRunnerRenderUtil.createBufferedImage(fullLevel, LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
 					LodeRunnerRenderUtil.LODE_RUNNER_TOAD_GAN_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, images);
+//			visualPath = LodeRunnerRenderUtil.createBufferedImage(fullLevel, LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
+//					LodeRunnerRenderUtil.LODE_RUNNER_ROWS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_Y, images);
 		}
 //		//creates a buffered image from the level to be displayed 
 //		BufferedImage visualPath = LodeRunnerRenderUtil.createBufferedImage(fullLevel, LodeRunnerRenderUtil.LODE_RUNNER_COLUMNS*LodeRunnerRenderUtil.LODE_RUNNER_TILE_X, 
